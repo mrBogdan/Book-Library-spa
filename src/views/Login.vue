@@ -39,7 +39,9 @@
       login () {
         const self = this;
         //testUser: e: p: shordfgdfg
-        axios.get('http://ms.bogdan.store/health/').then((res) => {
+        axios.post('http://ms.bogdan.store/user/login', {
+          
+        }).then((res) => {
           self.test = res.data;
         });
         //axios
