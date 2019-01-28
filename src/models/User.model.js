@@ -45,7 +45,7 @@ class UserCollection extends Collection {
   }
 }
 
-export default {
+export {
   User,
   UserCollection
 };

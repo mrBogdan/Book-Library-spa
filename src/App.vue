@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import Router from './router'
+import router from './router'
 
 export default {
   name: 'app',
-  router: Router
+  router
 }
 </script>
 

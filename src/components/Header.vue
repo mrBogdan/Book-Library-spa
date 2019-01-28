@@ -1,7 +1,9 @@
 <template>
-	<div class="header flex centered">
+	<div class="header flex">
+		<div class="logo">
+			<router-link to="/" class="not-active">Book Library</router-link>
+		</div>
 		<nav>
-			<router-link to="/">Home</router-link>
 			<router-link to="/login">Login</router-link>
 			<router-link to="/register">Register</router-link>
 		</nav>

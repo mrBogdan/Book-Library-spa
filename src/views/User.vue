@@ -10,9 +10,9 @@
 </template>
 
 <script>
-  import Header from './Header'
-  import SideBar from './SideBar'
-  import Footer from './Footer'
+  import Header from '../components/Header'
+  import SideBar from '../components/SideBar'
+  import Footer from '../components/Footer'
 
   export default {
     name: "User",

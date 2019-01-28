@@ -1,10 +1,17 @@
 @import "variables"
 
-body
+*
+  box-sizing: border-box
+
+html, body
   margin: 0
   padding: 0
   height: 100vh
   min-height: 100%
+
+a
+  text-decoration: none
+  color: $link-color
 
 #app
   font-family: 'Avenir', Helvetica, Arial, sans-serif
@@ -26,3 +33,7 @@ body
 
 .main
   grid-area: main
+
+.router-link-exact-active:not(.not-active)
+  color: #fff
+  font-weight: bold
