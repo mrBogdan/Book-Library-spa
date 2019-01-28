@@ -11,10 +11,10 @@ Vue.use(Router);
 const routes = [
   {
     path: '/',
-    component: Main,
     meta: {
       title: 'Home page - Book library'
-    }
+    },
+    component: Main
   },
   { path: '/register', component: Register },
   { path: '/login', component: Login },
