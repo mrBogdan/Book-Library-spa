@@ -10,9 +10,9 @@ yarn install
 yarn run serve
 ```
 
-### Compiles and minifies for production
+### Compiles and minifies for production | Run it into live ent
 ```
-yarn run build
+yarn run build && node index.js
 ```
 
 ### Run your tests

@@ -4,6 +4,7 @@ import Main from '../views/Main'
 import Register from '../views/Register'
 import Login from '../views/Login'
 import Account from '../views/User'
+import NotFound from '../views/NotFound'
 
 Vue.use(Router);
 
@@ -17,7 +18,8 @@ const routes = [
   },
   { path: '/register', component: Register },
   { path: '/login', component: Login },
-  { path: '/account', component: Account }
+  { path: '/account', component: Account },
+  { path: "*", component: NotFound }
 ];
 
 export default new Router({

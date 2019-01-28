@@ -1,10 +1,10 @@
 <template>
-	<div class="container">
-		<Header/>
-		<SideBar />
-		<div class="main">Register</div>
-		<Footer/>
-	</div>
+  <div class="container">
+    <Header/>
+    <SideBar />
+    <div class="main">Not found 404</div>
+    <Footer/>
+  </div>
 </template>
 
 <script>
@@ -13,7 +13,7 @@
   import Footer from '../components/Footer'
 
   export default {
-    name: "Register",
+    name: "NotFound",
     components: {
       Header,
       SideBar,
@@ -21,3 +21,7 @@
     }
   }
 </script>
+
+<style scoped>
+
+</style>
