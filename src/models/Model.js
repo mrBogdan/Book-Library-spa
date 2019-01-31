@@ -1,12 +1,9 @@
 export default class Model {
-  constructor (props) {
-    this.attribues = props.forEach((key, value) => {
-
+  constructor (model, props, params) {
+    model.forEach((item) => {
+      this.attributes[item] = props[item];
     });
+
+    this.url = params.url;
   }
-
-  fetch() {
-
-  }
-
 }

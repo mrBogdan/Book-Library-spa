@@ -24,7 +24,7 @@
 
   export default {
     name: "Login",
-    data() {
+    data () {
       const test = "";
       return {
         test
@@ -38,19 +38,24 @@
     methods: {
       login () {
         const self = this;
-        //testUser: e: p: shordfgdfg
-        axios.post('http://ms.bogdan.store/user/login', {
-          
-        }).then((res) => {
-          self.test = res.data;
+
+        const bodyFormData = new FormData();
+        bodyFormData.set('email', 'dfgdfgdg@dfgdfg.df');
+        bodyFormData.set('password', 'dfgdfgfdg');
+
+        axios({
+          url: 'http://book.local/user/login',
+          method: 'post',
+          data: bodyFormData
+        }).then(res => {
+          console.log(res);
+          self.test = res.data.data.user;
+          self.$router.push({name: '/account'});
+          console.log(self.$router.options.routes);
         });
-        //axios
-        //  .get(, {
-        //    crossdomain: true
-        //  })
-        //  .then((res) => self.test = res);
       }
-    }
+    },
+
   }
 </script>
 
