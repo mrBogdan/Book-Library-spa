@@ -55,13 +55,13 @@
 
           UserService.login(this.LoginModel.email, this.LoginModel.password)
             .then(res => {
-              console.log(res);
+              console.log(res.user);
 
-              this.$store.state.user = res.user;
+              UserService.saveUserId(res.user.id);
+              this.$store.commit('setUser', res.user);
               this.$store.state.auth = true;
               this.$store.state.accessToken = res.token;
 
-              UserService.saveUserId(res.user.id);
             })
             .catch(err => {
               this.ErrorModel.err = true;

@@ -22,7 +22,12 @@ const UserService = {
     const requestData = {
       method: 'POST',
       url: 'user/login',
-      data: bodyFormData
+      data: bodyFormData,
+      withCredentials: true,
+      auth: {
+        username: email,
+        password
+      }
     };
 
     try {
@@ -37,27 +42,44 @@ const UserService = {
   },
 
   logout () {
-    TokenService.removeToken();
-    ApiService.removeHeader();
+    const token = TokenService.getToken();
+
+    ApiService.post('http://localhost:80/user/logout', {}, {
+      headers: { 'Authorization': `Basic ${ token }` },
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log(res);
+        TokenService.removeToken();
+        ApiService.removeHeader();
+        this.removeUserId();
+
+        return res;
+      })
+      .catch(err => {
+        console.error(err);
+      });
+
   },
 
-  saveUserId(id) {
+  saveUserId (id) {
     localStorage.setItem(USER_ID_KEY, id);
   },
 
-  removeUserId() {
+  removeUserId () {
     localStorage.removeItem(USER_ID_KEY);
   },
 
-  getUserId() {
+  getUserId () {
     return localStorage.getItem(USER_ID_KEY);
   },
 
-  getUserById(id) {
+  getUserById (id) {
     const token = TokenService.getToken();
 
-    return ApiService.get(`http://localhost:80/user/${id}`, {
-      headers: { 'Authorization': `Basic ${token}` }
+    return ApiService.get(`http://localhost:80/user/${ id }`, {
+      headers: { 'Authorization': `Basic ${ token }` },
+      withCredentials: true
     });
   }
 

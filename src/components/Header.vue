@@ -19,7 +19,17 @@
     name: "Header",
     methods: {
       logout() {
-        this.$store.dispatch('logout');
+        const self = this;
+
+        this.$store.dispatch('logout')
+          .then(() => {
+            self.$router.push('/login');
+          })
+          .catch(err => {
+            console.log('this', this);
+            console.log('self', self);
+            console.error(err);
+          });
       }
     }
   }
