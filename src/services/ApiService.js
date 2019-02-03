@@ -15,8 +15,8 @@ const ApiService = {
     axios.defaults.headers.common = {};
   },
 
-  get(resourse) {
-    return axios.get(resourse);
+  get(resourse, options = {}) {
+    return axios.get(resourse, options);
   },
 
   post(resource, data) {

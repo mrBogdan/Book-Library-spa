@@ -5,7 +5,7 @@ import ApiService from "./services/ApiService";
 
 Vue.config.productionTip = false;
 
-ApiService.init('http://localhost');
+ApiService.init('http://localhost:80');
 
 if (TokenService.getToken()) {
   ApiService.setHeader();

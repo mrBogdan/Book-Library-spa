@@ -21,7 +21,11 @@ const routes = [
   {
     path: '/register',
     name: 'register',
-    component: Register
+    component: Register,
+    meta: {
+      public: true,
+      onlyWhenLoggedOut: true
+    }
   },
   {
     path: '/login',

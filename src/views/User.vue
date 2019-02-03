@@ -3,7 +3,7 @@
 		<Header/>
 		<SideBar/>
 		<div class="main flex centered">
-			User page
+			user
 		</div>
 		<Footer/>
 	</div>

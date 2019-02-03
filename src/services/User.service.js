@@ -1,6 +1,7 @@
 import ApiService from "./ApiService";
 import TokenService from "./TokenService";
-import User from "../views/User";
+
+const USER_ID_KEY = 'USER_ID_KEY';
 
 class AuthenticationError extends Error {
   constructor (errorCode, message) {
@@ -13,32 +14,51 @@ class AuthenticationError extends Error {
 
 const UserService = {
 
-  async login(email, password) {
+  async login (email, password) {
+    const bodyFormData = new FormData();
+    bodyFormData.set('email', email);
+    bodyFormData.set('password', password);
+
     const requestData = {
-      method: 'post',
+      method: 'POST',
       url: 'user/login',
-      data: {
-        email,
-        password,
-        grant_type: 'password',
-      }
+      data: bodyFormData
     };
 
     try {
       const response = await ApiService.customRequest(requestData);
-
-      TokenService.saveToken(response.data.token);
+      TokenService.saveToken(response.data.data.token);
       ApiService.setHeader();
 
-      return response.data.token;
+      return response.data.data;
     } catch ( e ) {
-      throw new AuthenticationError(e.response.status, e.response.data.errors[0]);
+      throw new AuthenticationError(401, 'Authentication error');
     }
   },
 
-  logout() {
+  logout () {
     TokenService.removeToken();
     ApiService.removeHeader();
+  },
+
+  saveUserId(id) {
+    localStorage.setItem(USER_ID_KEY, id);
+  },
+
+  removeUserId() {
+    localStorage.removeItem(USER_ID_KEY);
+  },
+
+  getUserId() {
+    return localStorage.getItem(USER_ID_KEY);
+  },
+
+  getUserById(id) {
+    const token = TokenService.getToken();
+
+    return ApiService.get(`http://localhost:80/user/${id}`, {
+      headers: { 'Authorization': `Basic ${token}` }
+    });
   }
 
 };

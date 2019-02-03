@@ -4,12 +4,12 @@
     <div class="main">
       <h1>Login</h1>
       <div class="login-form flex centered">
-        <input type="email" name="email" placeholder="Email"/>
-        <input type="password" name="password" placeholder="Password"/>
+        <input type="email" v-model="LoginModel.email" name="email" placeholder="Email"/>
+        <input type="password" v-model="LoginModel.password" name="password" placeholder="Password"/>
         <button type="button" @click="login()">Login</button>
       </div>
 
-      <div>{{ test }}</div>
+      <div v-if="ErrorModel.err"> {{ ErrorModel.errMsg }}</div>
     </div>
     <SideBar/>
     <Footer/>
@@ -20,14 +20,24 @@
   import Header from '../components/Header'
   import SideBar from '../components/SideBar'
   import Footer from '../components/Footer'
-
+  import UserService from '../services/User.service'
 
   export default {
     name: "Login",
     data () {
-      const test = "";
+      const LoginModel = {
+        email: "",
+        password: ""
+      };
+
+      const ErrorModel = {
+        err: false,
+        errMsg: ""
+      };
+
       return {
-        test
+        LoginModel,
+        ErrorModel
       }
     },
     components: {
@@ -37,22 +47,26 @@
     },
     methods: {
       login () {
-        const self = this;
+          if (!this.LoginModel.email || !this.LoginModel.password) {
+            this.ErrorModel.err = true;
+            this.ErrorModel.errMsg = "Fill correct values";
+            return;
+          }
 
-        const bodyFormData = new FormData();
-        bodyFormData.set('email', 'dfgdfgdg@dfgdfg.df');
-        bodyFormData.set('password', 'dfgdfgfdg');
+          UserService.login(this.LoginModel.email, this.LoginModel.password)
+            .then(res => {
+              console.log(res);
 
-        axios({
-          url: 'http://book.local/user/login',
-          method: 'post',
-          data: bodyFormData
-        }).then(res => {
-          console.log(res);
-          self.test = res.data.data.user;
-          self.$router.push({name: '/account'});
-          console.log(self.$router.options.routes);
-        });
+              this.$store.state.user = res.user;
+              this.$store.state.auth = true;
+              this.$store.state.accessToken = res.token;
+
+              UserService.saveUserId(res.user.id);
+            })
+            .catch(err => {
+              this.ErrorModel.err = true;
+              this.ErrorModel.errMsg = err.message;
+            });
       }
     },
 
@@ -65,5 +79,4 @@
 
     & > *
       margin-bottom: 10px
-
 </style>
