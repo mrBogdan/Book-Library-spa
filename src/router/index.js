@@ -6,6 +6,7 @@ import Login from '../views/Login'
 import Account from '../views/User'
 import NotFound from '../views/NotFound'
 import TokenService from "../services/TokenService";
+import AddBook from "../views/AddBook";
 
 Vue.use(Router);
 
@@ -14,9 +15,14 @@ const routes = [
     path: '/',
     name: 'home',
     meta: {
-      title: 'Home page - Book library'
+      title: 'Home page - Book library',
     },
     component: Main
+  },
+  {
+    path: '/add-book',
+    name: 'addBook',
+    component: AddBook
   },
   {
     path: '/register',
@@ -43,7 +49,10 @@ const routes = [
   },
   {
     path: "*",
-    component: NotFound
+    component: NotFound,
+    meta: {
+      public: true
+    }
   }
 ];
 

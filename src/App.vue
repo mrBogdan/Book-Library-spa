@@ -14,5 +14,3 @@ export default {
   store,
 }
 </script>
-
-<style lang="sass" src="./styles/main.sass"></style>

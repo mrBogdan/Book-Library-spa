@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <Header/>
-    <SideBar />
     <div class="main">Not found 404</div>
     <Footer/>
   </div>
@@ -16,7 +15,6 @@
     name: "NotFound",
     components: {
       Header,
-      SideBar,
       Footer
     }
   }

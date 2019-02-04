@@ -9,11 +9,8 @@ const Store = {
   state: {
     auth: false,
     accessToken: TokenService.getToken(),
-    user: userId ? UserService.getUserById(userId).then((res) => {
-      console.log('USER STORE => ', res.data);
-      Store.state.user = res.data.data;
-      Store.state.auth = true;
-    }) : {}
+    user: {},
+    userBooks: {},
   },
 
   getters: {
@@ -42,6 +39,14 @@ const Store = {
 
     setUser(state, user) {
       state.user = user;
+    },
+
+    setBooks(state, books) {
+      state.userBooks = books;
+    },
+
+    setAuth(state, auth) {
+      state.auth = auth;
     }
   }
 };

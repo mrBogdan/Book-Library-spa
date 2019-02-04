@@ -9,6 +9,7 @@
     </nav>
     <nav v-if="$store.state.auth">
       <router-link to="/account">Account</router-link>
+      <router-link to="/add-book">Add book</router-link>
       <button class="as-link" @click="logout">Logout</button>
     </nav>
   </div>

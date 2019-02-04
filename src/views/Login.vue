@@ -6,21 +6,20 @@
       <div class="login-form flex centered">
         <input type="email" v-model="LoginModel.email" name="email" placeholder="Email"/>
         <input type="password" v-model="LoginModel.password" name="password" placeholder="Password"/>
-        <button type="button" @click="login()">Login</button>
+        <button class="btn" @click="login()">Login</button>
       </div>
 
       <div v-if="ErrorModel.err"> {{ ErrorModel.errMsg }}</div>
     </div>
-    <SideBar/>
     <Footer/>
   </div>
 </template>
 
 <script>
   import Header from '../components/Header'
-  import SideBar from '../components/SideBar'
   import Footer from '../components/Footer'
   import UserService from '../services/User.service'
+  import ApiService from "../services/ApiService";
 
   export default {
     name: "Login",
@@ -42,7 +41,6 @@
     },
     components: {
       Header,
-      SideBar,
       Footer
     },
     methods: {
@@ -52,16 +50,21 @@
             this.ErrorModel.errMsg = "Fill correct values";
             return;
           }
+          const self = this;
 
           UserService.login(this.LoginModel.email, this.LoginModel.password)
             .then(res => {
               console.log(res.user);
 
+              UserService.getUserBooks(res.user.id).then((res) => {
+                self.$store.commit('setBooks', res);
+              });
+
               UserService.saveUserId(res.user.id);
               this.$store.commit('setUser', res.user);
               this.$store.state.auth = true;
               this.$store.state.accessToken = res.token;
-
+              this.$router.push('/account');
             })
             .catch(err => {
               this.ErrorModel.err = true;
@@ -73,6 +76,7 @@
   }
 </script>
 
+<style lang="sass" src="../styles/main.sass"></style>
 <style lang="sass" scoped>
   .login-form
     flex-direction: column

@@ -81,6 +81,13 @@ const UserService = {
       headers: { 'Authorization': `Basic ${ token }` },
       withCredentials: true
     });
+  },
+
+  getUserBooks(userId) {
+    return ApiService.get('http://localhost:80/book/user/' + userId, {
+      headers: { 'Authorization': `Basic ${ TokenService.getToken() }` },
+      withCredentials: true
+    });
   }
 
 };
