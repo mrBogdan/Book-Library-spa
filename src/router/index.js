@@ -22,7 +22,10 @@ const routes = [
   {
     path: '/add-book',
     name: 'addBook',
-    component: AddBook
+    component: AddBook,
+    meta: {
+      public: false
+    }
   },
   {
     path: '/register',

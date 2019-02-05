@@ -20,7 +20,8 @@
           </div>
           <div class="group-set">
             <p>Published year</p>
-            <input type="date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" v-model="BookModel.year" placeholder="Published year">
+            <input type="date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" v-model="BookModel.year"
+                   placeholder="Published year">
           </div>
           <div class="group-set">
             <p>Image of book</p>
@@ -34,17 +35,22 @@
               </option>
             </select>
           </div>
-          <button class="btn default">Add book</button>
+          <button class="btn">Add book</button>
         </form>
       </div>
     </div>
     <Footer/>
+    <Model v-if="showModal" @close="showModal = false">
+      <h3 slot="header">{{  }}</h3>
+      <div slot="body">custom byd</div>
+    </Model>
   </div>
 </template>
 
 <script>
   import Header from "../components/Header"
   import Footer from "../components/Footer"
+  import Model from "../components/Modal"
   import ApiService from "../services/ApiService";
   import UserService from "../services/User.service";
   import TokenService from "../services/TokenService";
@@ -78,16 +84,21 @@
           console.error(err);
         });
 
+      let modalHeader = "";
+
       return {
         BookModel,
         genres,
         error,
-        errors
+        errors,
+        modalHeader,
+        showModal: false
       }
     },
     components: {
       Header,
-      Footer
+      Footer,
+      Model
     },
 
     methods: {
@@ -111,12 +122,16 @@
         })
           .then(res => {
             self.error = false;
+            self.modalHeader = "Success added";
+            self.showModal = true;
           })
           .catch(err => {
             self.error = true;
             const errors = err.response.data.errors;
 
-            if (!errors)  { return; }
+            if ( !errors ) {
+              return;
+            }
 
             for ( let i = 0; i < errors.length; ++i ) {
               self.errors.splice(i, 1, errors[i]);

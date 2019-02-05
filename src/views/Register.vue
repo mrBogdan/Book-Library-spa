@@ -10,7 +10,8 @@
         <input type="email" v-model="RegisterModel.email" placeholder="Email">
         <input type="password" v-model="RegisterModel.password" placeholder="Password">
         <input type="tel" v-model="RegisterModel.telephone" placeholder="Telephone">
-        <input type="date" v-model="RegisterModel.birthdate" placeholder="Birthdate">
+        <input type="date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" v-model="RegisterModel.birthdate" placeholder="Birthdate">
+        <input type="file" @change="setFile">
         <button class="btn">Register</button>
       </form>
     </div>
@@ -34,7 +35,7 @@
         password: "",
         telephone: "",
         birthdate: "",
-        file: ""
+        image_user: ""
       };
 
       return {
@@ -43,7 +44,6 @@
     },
     components: {
       Header,
-      SideBar,
       Footer
     },
     methods: {
@@ -51,10 +51,11 @@
         const fd = new FormData();
 
         for ( const key in this.RegisterModel ) {
-          fd.set(key, this.RegisterModel[key]);
+          if (this.RegisterModel.hasOwnProperty(key) && key !== 'image_user')
+            fd.set(key, this.RegisterModel[key]);
         }
 
-        console.log('FD', fd);
+        fd.append('image_user', this.RegisterModel.image_user, this.RegisterModel.image_user.name);
 
         ApiService.post('http://localhost/user/register', fd,
           {
@@ -66,6 +67,10 @@
           .catch(err => {
             console.log(err);
           });
+      },
+
+      setFile (e) {
+        this.RegisterModel.image_user= e.target.files[0];
       }
     }
   }

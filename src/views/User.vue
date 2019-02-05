@@ -3,23 +3,24 @@
     <Header/>
     <div class="main flex">
       <div class="flex top">
-        <img :src="'http://localhost/' + user.path" alt="user photo" width="300">
+        <img :src="'http://localhost/' + user.path" class="user-photo" alt="user photo" width="300">
 
         <div style="text-align: left;">
-          <p>{{ user.first_name }}</p>
-          <p>{{ user.surname }}</p>
-          <p>{{ user.telephone }}</p>
-          <p>{{ user.birthdate }}</p>
-          <p>{{ user.email }}</p>
+          <p>Name: {{ user.first_name }}</p>
+          <p>Surname: {{ user.surname }}</p>
+          <p>Phone number: {{ user.telephone }}</p>
+          <p>Birth date: {{ user.birthdate }}</p>
+          <p>Email: {{ user.email }}</p>
         </div>
       </div>
 
       <div class="flex top">
         <div class="grid">
           <div v-for="(item, index) in userBooks" :key="index" class="grid-item">
-            <a href=""><img :src="'http://localhost/' + item.path" alt="Book image" width="200"></a>
+            <img :src="'http://localhost/' + item.path" alt="Book image" width="200">
             <p>{{ item.name }}</p>
-            <img src="../assets/trash.png" alt="Remove button" title="Remove?" @click="removeBook" :data-id="item.id" class="remove-btn">
+            <img src="../assets/trash.png" alt="Remove button" title="Remove?" @click="removeBook" :data-id="item.id"
+                 class="remove-btn">
           </div>
         </div>
       </div>
@@ -75,12 +76,19 @@
     },
     methods: {
       removeBook (event) {
+        const token = this.$store.state.accessToken;
         const target = event.srcElement.dataset.id;
         const userId = this.$store.getters.getUser.id;
 
-        ApiService.delete(`http://localhost/book/${target}/user/${userId}`)
+        ApiService.delete(`http://localhost/book/${ target }/user/${ userId }`, {
+          headers: { 'Authorization': `Basic ${ token }` },
+          withCredentials: true,
+        })
           .then(res => {
             console.log(res);
+          })
+          .catch(err => {
+            console.error(err);
           });
       }
     },
@@ -109,4 +117,8 @@
       bottom: 15px
       right: 0
       cursor: pointer
+  img.user-photo
+    border-radius: 50%
+    margin: 5px
+
 </style>

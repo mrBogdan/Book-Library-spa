@@ -27,8 +27,8 @@ const ApiService = {
     return axios.put(resource, data);
   },
 
-  delete(resource) {
-    return axios.delete(resource);
+  delete(resource, config = {}) {
+    return axios.delete(resource, config);
   },
 
   customRequest(data) {
