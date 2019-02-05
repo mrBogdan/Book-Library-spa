@@ -9,7 +9,7 @@
         <button class="btn" @click="login()">Login</button>
       </div>
 
-      <div v-if="ErrorModel.err"> {{ ErrorModel.errMsg }}</div>
+      <div v-if="ErrorModel.err" class="error-message"> {{ ErrorModel.errMsg }}</div>
     </div>
     <Footer/>
   </div>
@@ -54,8 +54,6 @@
 
           UserService.login(this.LoginModel.email, this.LoginModel.password)
             .then(res => {
-              console.log(res.user);
-
               UserService.getUserBooks(res.user.id).then((res) => {
                 self.$store.commit('setBooks', res);
               });
@@ -78,9 +76,13 @@
 
 <style lang="sass" src="../styles/main.sass"></style>
 <style lang="sass" scoped>
+  @import "../styles/variables"
+
   .login-form
     flex-direction: column
 
     & > *
       margin-bottom: 10px
+  .error-message
+    color: $error
 </style>

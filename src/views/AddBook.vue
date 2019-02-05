@@ -41,8 +41,8 @@
     </div>
     <Footer/>
     <Model v-if="showModal" @close="showModal = false">
-      <h3 slot="header">{{  }}</h3>
-      <div slot="body">custom byd</div>
+      <h3 slot="header">{{ modalHeader }}</h3>
+      <div slot="body"></div>
     </Model>
   </div>
 </template>
@@ -160,12 +160,5 @@
       & > *
         margin-bottom: 20px
         height: 30px
-
-  .error-block
-    ul
-      li
-        color: $error
-        list-style: none
-        padding: 0
-        text-align: left
 </style>
+<style lang="sass" src="../styles/main.sass"></style>

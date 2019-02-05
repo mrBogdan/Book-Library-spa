@@ -17,7 +17,7 @@
       <div class="flex top">
         <div class="grid">
           <div v-for="(item, index) in userBooks" :key="index" class="grid-item">
-            <img :src="'http://localhost/' + item.path" alt="Book image" width="200">
+            <router-link :to="{ name: 'book', params: { id: item.id }}"><img :src="'http://localhost/' + item.path" alt="Book image" width="200"></router-link>
             <p>{{ item.name }}</p>
             <img src="../assets/trash.png" alt="Remove button" title="Remove?" @click="removeBook" :data-id="item.id"
                  class="remove-btn">

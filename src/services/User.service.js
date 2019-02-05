@@ -49,7 +49,6 @@ const UserService = {
       withCredentials: true,
     })
       .then((res) => {
-        console.log(res);
         TokenService.removeToken();
         ApiService.removeHeader();
         this.removeUserId();
@@ -58,6 +57,10 @@ const UserService = {
       })
       .catch(err => {
         console.error(err);
+
+        TokenService.removeToken();
+        ApiService.removeHeader();
+        this.removeUserId();
       });
 
   },
@@ -89,7 +92,6 @@ const UserService = {
       withCredentials: true
     });
   }
-
 };
 
 export default UserService;

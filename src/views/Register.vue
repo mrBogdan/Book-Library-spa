@@ -14,6 +14,13 @@
         <input type="file" @change="setFile">
         <button class="btn">Register</button>
       </form>
+      <div v-if="error" class="flex centered error-block">
+        <ul>
+          <li v-for="(item, index) in errors" :key="index">
+            {{ item }}
+          </li>
+        </ul>
+      </div>
     </div>
     <Footer/>
   </div>
@@ -21,13 +28,15 @@
 
 <script>
   import Header from '../components/Header'
-  import SideBar from '../components/SideBar'
   import Footer from '../components/Footer'
   import ApiService from "../services/ApiService";
 
   export default {
     name: "Register",
     data () {
+      let error = false;
+      let errors = [];
+
       const RegisterModel = {
         first_name: "",
         surname: "",
@@ -39,7 +48,9 @@
       };
 
       return {
-        RegisterModel
+        RegisterModel,
+        error,
+        errors
       }
     },
     components: {
@@ -47,7 +58,8 @@
       Footer
     },
     methods: {
-      handleSubmit (e) {
+      handleSubmit () {
+        const self = this;
         const fd = new FormData();
 
         for ( const key in this.RegisterModel ) {
@@ -61,11 +73,18 @@
           {
             headers: { 'Content-Type': 'multipart/form-data' }
           })
-          .then((res) => {
-            console.log(res);
+          .then(() => {
+            self.$router.push('/login');
           })
           .catch(err => {
-            console.log(err);
+            console.error(err);
+
+            const errors = err.response.data.errors;
+            self.error = true;
+
+            for ( let i = 0; i < errors.length; ++i ) {
+              self.errors.splice(i, 1, errors[i]);
+            }
           });
       },
 

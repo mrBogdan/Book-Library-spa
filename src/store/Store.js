@@ -1,10 +1,6 @@
 import TokenService from "../services/TokenService";
 import UserService from "../services/User.service";
 
-const userId = UserService.getUserId() || false;
-
-console.log('ID => ', userId);
-
 const Store = {
   state: {
     auth: false,
@@ -20,6 +16,10 @@ const Store = {
 
     getUser: (state) => {
       return state.user;
+    },
+
+    getBooks(state) {
+      return state.userBooks
     }
   },
 
@@ -31,21 +31,21 @@ const Store = {
   },
 
   mutations: {
-    logoutSuccess(state, accessToken) {
+    logoutSuccess (state, accessToken) {
       state.auth = false;
       state.user = {};
       state.accessToken = accessToken;
     },
 
-    setUser(state, user) {
+    setUser (state, user) {
       state.user = user;
     },
 
-    setBooks(state, books) {
+    setBooks (state, books) {
       state.userBooks = books;
     },
 
-    setAuth(state, auth) {
+    setAuth (state, auth) {
       state.auth = auth;
     }
   }

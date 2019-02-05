@@ -7,6 +7,7 @@ import Account from '../views/User'
 import NotFound from '../views/NotFound'
 import TokenService from "../services/TokenService";
 import AddBook from "../views/AddBook";
+import Book from "../views/Book";
 
 Vue.use(Router);
 
@@ -16,8 +17,17 @@ const routes = [
     name: 'home',
     meta: {
       title: 'Home page - Book library',
+      public: true
     },
     component: Main
+  },
+  {
+    path: '/book/:id',
+    name: 'book',
+    component: Book,
+    meta: {
+      public: false
+    }
   },
   {
     path: '/add-book',

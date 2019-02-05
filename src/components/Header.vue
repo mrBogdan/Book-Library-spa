@@ -27,8 +27,6 @@
             self.$router.push('/login');
           })
           .catch(err => {
-            console.log('this', this);
-            console.log('self', self);
             console.error(err);
           });
       }

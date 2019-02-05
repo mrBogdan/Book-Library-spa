@@ -32,9 +32,9 @@
       let userList = {};
       const self = this;
 
-      function setList(list) {
-        for (const key in list) {
-          if (list.hasOwnProperty(key)) {
+      function setList (list) {
+        for ( const key in list ) {
+          if ( list.hasOwnProperty(key) ) {
             self.$set(userList, key, list[key]);
           }
         }
@@ -45,9 +45,8 @@
           setList(list.data.data);
         })
         .catch(err => {
-          console.log(err);
+          console.error(err);
         });
-
 
       return {
         userList
@@ -64,7 +63,8 @@
   .main
     .user-list
       width: 100%
-  .tr
-    td
-      padding: 20px
+
+    .tr
+      td
+        padding: 20px
 </style>
